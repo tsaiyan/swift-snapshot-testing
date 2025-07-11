@@ -257,7 +257,7 @@ final class SnapshotTestingTests: BaseTestCase {
     #if os(iOS) || os(tvOS) || os(macOS)
       let imageURL = URL(fileURLWithPath: String(#file), isDirectory: false)
         .deletingLastPathComponent()
-        .appendingPathComponent("__Fixtures__/testImagePrecision.reference.png")
+        .appendingPathComponent("__Fixtures__/testImagePrecision.reference.heic")
       #if os(iOS) || os(tvOS)
         let image = try XCTUnwrap(UIImage(contentsOfFile: imageURL.path))
       #elseif os(macOS)

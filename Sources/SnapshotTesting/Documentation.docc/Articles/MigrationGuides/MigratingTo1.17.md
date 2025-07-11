@@ -37,7 +37,7 @@ These customization options have a few downsides currently.
     arguments,  _e.g.:
 
     ```sh
-    ksdiff /path/to/file1.png /path/to/file2.png
+    ksdiff /path/to/file1.heic /path/to/file2.heic
     ```
 
 Because of these reasons, the globals ``isRecording`` and ``diffTool`` are now deprecated, and we
@@ -121,8 +121,8 @@ Further, the `diffTool` and `record` arguments have extra customization capabili
 
     ```swift
     extension SnapshotTestingConfiguration.DiffTool {
-      static let compare = Self { 
-        "compare \"\($0)\" \"\($1)\" png: | open -f -a Preview.app" 
+      static let compare = Self {
+        "compare \"\($0)\" \"\($1)\" heic: | open -f -a Preview.app"
       }
     }
     ```

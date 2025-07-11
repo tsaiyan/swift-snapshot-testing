@@ -144,7 +144,7 @@ public struct SnapshotTestingConfiguration: Sendable {
   /// ```swift
   /// extension SnapshotTestingConfiguration.DiffTool {
   ///   static let compare = Self {
-  ///     "compare \"\($0)\" \"\($1)\" png: | open -f -a Preview.app"
+  ///     "compare \"\($0)\" \"\($1)\" heic: | open -f -a Preview.app"
   ///   }
   /// }
   /// ```

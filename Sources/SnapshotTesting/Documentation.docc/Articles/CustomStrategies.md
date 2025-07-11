@@ -78,7 +78,7 @@ For example, were we to define a strategy for `WKWebView` _without_
 ``` swift
 extension Snapshotting where Value == WKWebView, Format == UIImage {
   public static let image = Snapshotting(
-    pathExtension: "png",
+    pathExtension: "heic",
     diffing: .image,
     asyncSnapshot: { webView in
       Async { callback in

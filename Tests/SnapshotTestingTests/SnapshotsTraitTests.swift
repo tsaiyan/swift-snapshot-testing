@@ -7,8 +7,8 @@
       @Test(.snapshots(diffTool: "ksdiff"))
       func testDiffTool() {
         #expect(
-          _diffTool(currentFilePath: "old.png", failedFilePath: "new.png")
-            == "ksdiff old.png new.png"
+          _diffTool(currentFilePath: "old.heic", failedFilePath: "new.heic")
+            == "ksdiff old.heic new.heic"
         )
       }
 
@@ -17,8 +17,8 @@
         @Test(.snapshots(diffTool: "difftool"))
         func testDiffToolOverride() {
           #expect(
-            _diffTool(currentFilePath: "old.png", failedFilePath: "new.png")
-              == "difftool old.png new.png"
+            _diffTool(currentFilePath: "old.heic", failedFilePath: "new.heic")
+              == "difftool old.heic new.heic"
           )
         }
 
@@ -27,8 +27,8 @@
           @Test
           func config() {
             #expect(
-              _diffTool(currentFilePath: "old.png", failedFilePath: "new.png")
-                == "ksdiff old.png new.png"
+              _diffTool(currentFilePath: "old.heic", failedFilePath: "new.heic")
+                == "ksdiff old.heic new.heic"
             )
             #expect(_record == .all)
           }
@@ -38,8 +38,8 @@
             @Test
             func config() {
               #expect(
-                _diffTool(currentFilePath: "old.png", failedFilePath: "new.png")
-                  == "diff old.png new.png"
+                _diffTool(currentFilePath: "old.heic", failedFilePath: "new.heic")
+                  == "diff old.heic new.heic"
               )
               #expect(_record == .failed)
             }
