@@ -1,6 +1,8 @@
 #if os(iOS) || os(tvOS)
   import UIKit
   import XCTest
+  import AVFoundation
+  import ImageIO
 
   extension Diffing where Value == UIImage {
     /// A pixel-diffing strategy for UIImage's which requires a 100% match.
@@ -28,7 +30,7 @@
       }
 
       return Diffing(
-        toData: { $0.pngData() ?? emptyImage().pngData()! },
+        toData: { $0.heicData() ?? emptyImage().heicData()! },
         fromData: { UIImage(data: $0, scale: imageScale)! }
       ) { old, new in
         guard
@@ -81,7 +83,7 @@
       precision: Float = 1, perceptualPrecision: Float = 1, scale: CGFloat? = nil
     ) -> Snapshotting {
       return .init(
-        pathExtension: "png",
+        pathExtension: "heic",
         diffing: .image(
           precision: precision, perceptualPrecision: perceptualPrecision, scale: scale)
       )
@@ -119,8 +121,8 @@
     }
     var newerBytes = [UInt8](repeating: 0, count: byteCount)
     guard
-      let pngData = new.pngData(),
-      let newerCgImage = UIImage(data: pngData)?.cgImage,
+      let heicData = new.heicData(),
+      let newerCgImage = UIImage(data: heicData)?.cgImage,
       let newerContext = context(for: newerCgImage, data: &newerBytes),
       let newerData = newerContext.data
     else {
@@ -188,6 +190,25 @@
     let differenceImage = UIGraphicsGetImageFromCurrentImageContext()!
     UIGraphicsEndImageContext()
     return differenceImage
+  }
+
+  extension UIImage {
+    fileprivate func heicData() -> Data? {
+      guard let cgImage = self.cgImage else { return nil }
+      let data = NSMutableData()
+      let type: CFString
+      if #available(iOS 11.0, tvOS 11.0, *) {
+        type = AVFileType.heic as CFString
+      } else {
+        return self.pngData()
+      }
+      guard
+        let destination = CGImageDestinationCreateWithData(data as CFMutableData, type, 1, nil)
+      else { return nil }
+      CGImageDestinationAddImage(destination, cgImage, nil)
+      guard CGImageDestinationFinalize(destination) else { return nil }
+      return data as Data
+    }
   }
 #endif
 

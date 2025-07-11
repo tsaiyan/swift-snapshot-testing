@@ -6,12 +6,12 @@ class WithSnapshotTestingTests: XCTestCase {
     withSnapshotTesting(record: .all) {
       XCTAssertEqual(
         SnapshotTestingConfiguration.current?
-          .diffTool?(currentFilePath: "old.png", failedFilePath: "new.png"),
+          .diffTool?(currentFilePath: "old.heic", failedFilePath: "new.heic"),
         """
         @−
-        "file://old.png"
+        "file://old.heic"
         @+
-        "file://new.png"
+        "file://new.heic"
 
         To configure output for a custom diff tool, use 'withSnapshotTesting'. For example:
 
@@ -24,8 +24,8 @@ class WithSnapshotTestingTests: XCTestCase {
       withSnapshotTesting(diffTool: "ksdiff") {
         XCTAssertEqual(
           SnapshotTestingConfiguration.current?
-            .diffTool?(currentFilePath: "old.png", failedFilePath: "new.png"),
-          "ksdiff old.png new.png"
+            .diffTool?(currentFilePath: "old.heic", failedFilePath: "new.heic"),
+          "ksdiff old.heic new.heic"
         )
         XCTAssertEqual(SnapshotTestingConfiguration.current?.record, .all)
       }

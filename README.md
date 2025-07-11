@@ -31,7 +31,7 @@ printing out the file path of any newly-recorded reference.
 
 > ❌ failed - No reference was found on disk. Automatically recorded snapshot: …
 >
-> open "…/MyAppTests/\_\_Snapshots\_\_/MyViewControllerTests/testMyViewController.png"
+> open "…/MyAppTests/\_\_Snapshots\_\_/MyViewControllerTests/testMyViewController.heic"
 >
 > Re-run "testMyViewController" to test against the newly-recorded snapshot.
 

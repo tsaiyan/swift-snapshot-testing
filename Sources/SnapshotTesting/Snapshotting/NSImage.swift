@@ -17,7 +17,7 @@
     /// - Returns: A new diffing strategy.
     public static func image(precision: Float = 1, perceptualPrecision: Float = 1) -> Diffing {
       return .init(
-        toData: { NSImagePNGRepresentation($0)! },
+        toData: { NSImageHEICRepresentation($0)! },
         fromData: { NSImage(data: $0)! }
       ) { old, new in
         guard
@@ -55,19 +55,23 @@
     ///     human eye.
     public static func image(precision: Float = 1, perceptualPrecision: Float = 1) -> Snapshotting {
       return .init(
-        pathExtension: "png",
+        pathExtension: "heic",
         diffing: .image(precision: precision, perceptualPrecision: perceptualPrecision)
       )
     }
   }
 
-  private func NSImagePNGRepresentation(_ image: NSImage) -> Data? {
+  private func NSImageHEICRepresentation(_ image: NSImage) -> Data? {
     guard let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
       return nil
     }
     let rep = NSBitmapImageRep(cgImage: cgImage)
     rep.size = image.size
-    return rep.representation(using: .png, properties: [:])
+    if #available(macOS 10.13, *) {
+      return rep.representation(using: .heic, properties: [:])
+    } else {
+      return rep.representation(using: .png, properties: [:])
+    }
   }
 
   private func compare(_ old: NSImage, _ new: NSImage, precision: Float, perceptualPrecision: Float)
@@ -94,8 +98,8 @@
     let byteCount = oldContext.height * oldContext.bytesPerRow
     if memcmp(oldData, newData, byteCount) == 0 { return nil }
     guard
-      let pngData = NSImagePNGRepresentation(new),
-      let newerCgImage = NSImage(data: pngData)?.cgImage(
+      let heicData = NSImageHEICRepresentation(new),
+      let newerCgImage = NSImage(data: heicData)?.cgImage(
         forProposedRect: nil, context: nil, hints: nil),
       let newerContext = context(for: newerCgImage),
       let newerData = newerContext.data
