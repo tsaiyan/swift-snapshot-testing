@@ -67,11 +67,7 @@
     }
     let rep = NSBitmapImageRep(cgImage: cgImage)
     rep.size = image.size
-    if #available(macOS 10.13, *) {
-      return rep.representation(using: .heic, properties: [:])
-    } else {
-      return rep.representation(using: .png, properties: [:])
-    }
+    return rep.representation(using: .heic, properties: [:])
   }
 
   private func compare(_ old: NSImage, _ new: NSImage, precision: Float, perceptualPrecision: Float)

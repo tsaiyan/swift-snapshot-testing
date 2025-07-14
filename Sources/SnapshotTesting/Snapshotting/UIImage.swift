@@ -196,14 +196,13 @@
     fileprivate func heicData() -> Data? {
       guard let cgImage = self.cgImage else { return nil }
       let data = NSMutableData()
-      let type: CFString
-      if #available(iOS 11.0, tvOS 11.0, *) {
-        type = AVFileType.heic as CFString
-      } else {
-        return self.pngData()
-      }
       guard
-        let destination = CGImageDestinationCreateWithData(data as CFMutableData, type, 1, nil)
+        let destination = CGImageDestinationCreateWithData(
+          data as CFMutableData,
+          AVFileType.heic as CFString,
+          1,
+          nil
+        )
       else { return nil }
       CGImageDestinationAddImage(destination, cgImage, nil)
       guard CGImageDestinationFinalize(destination) else { return nil }
