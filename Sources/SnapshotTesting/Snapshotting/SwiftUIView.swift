@@ -67,12 +67,11 @@
           let controller: UIViewController
 
           if config.size != nil {
-            controller = UIHostingController.init(
+            controller = TransparentHostingController.init(
               rootView: view
             )
           } else {
-            let hostingController = UIHostingController.init(rootView: view)
-            hostingController.view.backgroundColor = .clear
+            let hostingController = TransparentHostingController.init(rootView: view)
             let maxSize = CGSize(width: 0.0, height: 0.0)
             config.size = hostingController.sizeThatFits(in: maxSize)
 
